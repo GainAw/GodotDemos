@@ -4,7 +4,7 @@
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
-enumVar = 0
+enumVar = ""
 dictionaryBase = {
 }
 nodePathArray = [  ]

@@ -7,9 +7,14 @@ var floatBase = 0
 var floatRange = 0
 var resourceBase = null
 enum testEnum {Thing1, Thing2, Thing3}
-var enumVar = 0
+var enumVar
 var dictionaryBase = {}
 var nodePathArray = []
+
+var multipleVariable_Variable1
+var multipleVariable_Variable2
+var multipleVariable_Variable3
+var multipleVariable_Variable4
 
 func _get_property_list():
 	var properties = []
@@ -40,7 +45,7 @@ func _get_property_list():
 		}
 		)
 	properties.append(
-		#Sub Categories are called Groups by Godot and work simularly to categories but are contained in the parent category
+		#Sub Categories are called Groups and work simularly to categories but are contained in a parent category
 		{
 			"name" : "Test Group",
 			"type" : TYPE_NIL,
@@ -59,21 +64,61 @@ func _get_property_list():
 			"hint_string" : "ImageTexture"
 		}
 		)
-		#enums are rather tricky as the keys need to be strings
+		#Enums are somewhat tricky as the Type can only be strings or ints
 	properties.append(
 		{
 			"name" : "enumVar",
-			#type Needs to be set to int as it is setting the index of the dictionary as if it was an array
+			#The Type for enums needs to be set to INT or STRING.
 			"type" : TYPE_INT,
-			#This is the only property up untill this point that will save when the scene is saved
+			#This is the only property up until this point that will save when the scene is saved
 			"usage" : PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
 			"hint" : PROPERTY_HINT_ENUM,
 			#hint_string needs to be the keys of the base enum in a string separated by commas
 			"hint_string" : "Thing1, Thing2, Thing3"
 		}
 	)
+	"""
+	Groups can be used to shorten similar variable names
+	Note you still need to add the variables to the group manually and that this group will only take
+	Variables that have the hint_String prefix
+	"""
 	properties.append(
-		#Sub Categories are called Groups by Godot and work simularly to categories but are contained in the parent category
+		{
+			"name" : "Multiple Variables",
+			"type" : TYPE_NIL,
+			"hint_string" : "multipleVariable_",
+			"usage" : PROPERTY_USAGE_GROUP | PROPERTY_USAGE_SCRIPT_VARIABLE
+		}
+	)
+	properties.append(
+		{
+			"name" : "multipleVariable_Variable1",
+			"type" : TYPE_INT,
+			"usage" : PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_EDITOR
+		}
+	)
+	properties.append(
+		{
+			"name" : "multipleVariable_Variable2",
+			"type" : TYPE_INT,
+			"usage" : PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_EDITOR
+		}
+	)
+	properties.append(
+		{
+			"name" : "multipleVariable_Variable3",
+			"type" : TYPE_INT,
+			"usage" : PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_EDITOR
+		}
+	)
+	properties.append(
+		{
+			"name" : "multipleVariable_Variable4",
+			"type" : TYPE_INT,
+			"usage" : PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_EDITOR
+		}
+	)
+	properties.append(
 		{
 			"name" : "Another Group",
 			"type" : TYPE_NIL,
@@ -84,16 +129,16 @@ func _get_property_list():
 		{
 			"name" : "dictionaryBase",
 			"type" : TYPE_DICTIONARY,
-			#Usage default also saves on scene save and is a shory hand of putting all 3 usage flags (see line 69)
+			#PROPERTY_USAGE_DEFAULT also saves on scene save and is shoryhand for putting all 3 usage flags (see line 74)
 			"usage" : PROPERTY_USAGE_DEFAULT
 		}
 	)
 	"""
-	For things like arrays of NodePaths is where this system is very bad and falls apart,
-		as it is rather unintuitive on how they work at times.
-		For a look up on what you need for these cases you can look at your current version's github page
-		and find the variant.h file and the object.h file
-		example for 3.3 can be found at the links
+	For things like arrays of NodePaths it is rather unintuitive as to how they work.
+		For a look up on what you need for these use cases you can look at your current GODOT version's github page
+		and find the variant.h file's Type Enum
+		and the object.h file's PropertyHint enum (Many of which aren't exposed to GDScript).
+		example for Godot 3.3 can be found at the links below.
 		https://github.com/godotengine/godot/blob/3.3/core/variant.h
 		https://github.com/godotengine/godot/blob/3.3/core/object.h
 	"""
@@ -106,7 +151,7 @@ func _get_property_list():
 		}
 	)
 		
-		#Second category to show how what I mean by line 14
+	#Second category to show how what I mean by line 21
 	properties.append(
 		{
 			"name" : "Floats only",
